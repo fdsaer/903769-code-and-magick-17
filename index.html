@@ -188,14 +188,14 @@
   var getFireballSpeed = function (left) {
     return left ? 5 : 2;
   };
-  getWizardHeight = function (width) {
+  var getWizardHeight = function (width) {
     return width * 1.337;
   };
   var getWizardX = function (width) {
     return width / 2 - wizardWidth / 2;
   };
   var getWizardY = function (height) {
-    return height * 1 / 3 - getWizardHeight(wizardWidth) / 2 ; // Чтобы на 2/3 от земли позиционировался центр фигуры (из задания не очевидно)
+    return height / 3 - getWizardHeight(wizardWidth) / 2 ;
   };
 </script>
 <script src="js/game.js"></script>
