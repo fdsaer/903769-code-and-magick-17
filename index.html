@@ -182,27 +182,20 @@
 </template>
 
 <script>
-  var fireballSize = 22;
-  var getFireballSpeed = function (left) {
-    var left;
-    if (left) {
-      return 5;
-    }
-    return 2;
-  };
   wizardSpeed = 3;
   wizardWidth = 70;
+  var fireballSize = 22;
+  var getFireballSpeed = function (left) {
+    return left ? 5 : 2;
+  };
   getWizardHeight = function (width) {
-    var height = width * 1.337;
-    return height;
+    return width * 1.337;
   };
   var getWizardX = function (width) {
-    var width;
-    return width / 2;
+    return width / 2 - wizardWidth / 2;
   };
   var getWizardY = function (height) {
-    var height;
-    return height * 2 / 3;
+    return height * 1 / 3 - getWizardHeight(wizardWidth) / 2 ; // Чтобы на 2/3 от земли позиционировался центр фигуры (из задания не очевидно)
   };
 </script>
 <script src="js/game.js"></script>
