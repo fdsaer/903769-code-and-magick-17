@@ -33,10 +33,7 @@ var renderColumn = function (ctx, name, time, x, k) {
   ctx.fillStyle = '#000';
   ctx.fillText(name, x, CLOUD_HEIGHT);
   ctx.fillText(Math.round(time), x, CLOUD_HEIGHT - TEXT_GAP + columnHeight);
-  ctx.fillStyle = columnColor;
-  if (name === 'Вы') {
-    ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-  }
+  ctx.fillStyle = name === 'Вы' ? 'rgba(255, 0, 0, 1)' : columnColor;
   ctx.fillRect(x, COLUMN_Y, COLUMN_WIDTH, columnHeight);
 };
 
@@ -48,12 +45,13 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.font = '16px PT Mono';
   ctx.fillStyle = '#000';
   ctx.fillText('Ура вы победили!', COLUMN_X, CLOUD_Y + TEXT_GAP);
-  ctx.fillText('Список результатов:', COLUMN_X, CLOUD_Y + TEXT_GAP + 20);
+  ctx.fillText('Список результатов:', COLUMN_X, CLOUD_Y + TEXT_GAP * 2);
 
   var maxTime = searchMax(times);
+  var nextColumn = COLUMN_X;
 
   for (var i = 0; i < names.length; i++) {
-    renderColumn(ctx, names[i], times[i], COLUMN_X, maxTime);
-    COLUMN_X = COLUMN_X + COLUMN_WIDTH + COLUMN_GAP;
+    renderColumn(ctx, names[i], times[i], nextColumn, maxTime);
+    nextColumn = nextColumn + COLUMN_WIDTH + COLUMN_GAP;
   }
 };
