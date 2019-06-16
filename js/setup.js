@@ -20,9 +20,9 @@ var getRandomWizard = function () {
   var randomNumber = Math.floor(Math.random() * 2);
   var firstPart = getRandomItem(WIZARD_NAMES);
   var secondPart = getRandomItem(WIZARD_SURNAMES);
-  return {'name': [randomNumber ? (firstPart + ' ' + secondPart) : (secondPart + ' ' + firstPart)],
-    'coatColor': [getRandomItem(COAT_COLORS)],
-    'eyesColor': [getRandomItem(EYES_COLORS)]
+  return {'name': randomNumber ? (firstPart + ' ' + secondPart) : (secondPart + ' ' + firstPart),
+    'coatColor': getRandomItem(COAT_COLORS),
+    'eyesColor': getRandomItem(EYES_COLORS)
   };
 };
 
