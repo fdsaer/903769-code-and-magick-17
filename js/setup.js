@@ -71,13 +71,7 @@ var closePopup = function () {
 };
 
 var getNextIndex = function (arr, item) {
-  var next;
-  if (item === arr.length - 1) {
-    next = 0;
-  } else {
-    next = item + 1;
-  }
-  return next;
+  return (item === arr.length - 1) ? 0 : item + 1;
 };
 
 var setElementColor = function (name, source, destination, type, field) {
