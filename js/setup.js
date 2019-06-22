@@ -16,6 +16,27 @@ var wizardFormShutter = wizardForm.querySelector('.setup-close');
 var documentFragment = document.createDocumentFragment();
 var wizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 var wizardNameInput = wizardForm.querySelector('.setup-user-name');
+var wizardsCoat = wizardForm.querySelector('.setup-wizard .wizard-coat');
+var wizardsEyes = wizardForm.querySelector('.setup-wizard .wizard-eyes');
+var wizardsFireBall = wizardForm.querySelector('.setup-fireball-wrap');
+var wizardCoatColorFormField = wizardForm.querySelector('input[name=coat-color]');
+var wizardEyesColorFormField = wizardForm.querySelector('input[name=eyes-color]');
+var wizardFireBallColorFormField = wizardForm.querySelector('input[name=fireball-color]');
+
+var currentWizardProperties = {
+  coatColor: {
+    color: wizardsCoat.style.fill,
+    index: ''
+  },
+  eyesColor: {
+    color: wizardsEyes.style.fill ? wizardsEyes.style.fill : 'black',
+    index: ''
+  },
+  fireballColor: {
+    color: wizardsFireBall.style.backgroundColor ? wizardsFireBall.style.backgroundColor : '#ee4830',
+    index: ''
+  },
+};
 
 var getRandomItem = function (arr) {
   var randomNumber = Math.floor(Math.random() * arr.length);
@@ -58,6 +79,42 @@ var closePopup = function () {
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
+var getCurrentIndex = function (arr, item) {
+  var index;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i] === item) {
+      index = i;
+    }
+  }
+  if (index === undefined) {
+    index = arr.length;
+  }
+  return index;
+};
+
+var getNextIndex = function (arr, item) {
+  var next;
+  if (item === arr.length - 1) {
+    next = 0;
+  } else {
+    next = item + 1;
+  }
+  return next;
+};
+
+var putColor = function (property, sourse, destination, type, field) {
+  var colorIndex;
+  if (property.index !== '') {
+    colorIndex = getNextIndex(sourse, property.index);
+  } else {
+    colorIndex = getNextIndex(sourse, getCurrentIndex(sourse, property.color));
+  }
+  destination.style[type] = sourse[colorIndex];
+  property.color = destination.style.type;
+  property.index = colorIndex;
+  field.value = sourse[colorIndex];
+};
+
 for (var i = 0; i < NUMBER_OF_SIMILAR_WIZARDS; i++) {
   documentFragment.appendChild(getWizardCard());
 }
@@ -90,64 +147,6 @@ wizardNameInput.addEventListener('keydown', function (evt) {
     evt.preventDefault();
   }
 });
-
-var wizardsCoat = wizardForm.querySelector('.setup-wizard .wizard-coat');
-var wizardsEyes = wizardForm.querySelector('.setup-wizard .wizard-eyes');
-var wizardsFireBall = wizardForm.querySelector('.setup-fireball-wrap');
-var wizardCoatColorFormField = wizardForm.querySelector('input[name=coat-color]');
-var wizardEyesColorFormField = wizardForm.querySelector('input[name=eyes-color]');
-var wizardFireBallColorFormField = wizardForm.querySelector('input[name=fireball-color]');
-
-var currentWizardProperties = {
-  coatColor: {
-    color: wizardsCoat.style.fill,
-    index: ''
-  },
-  eyesColor: {
-    color: wizardsEyes.style.fill ? wizardsEyes.style.fill : 'black',
-    index: ''
-  },
-  fireballColor: {
-    color: wizardsFireBall.style.backgroundColor ? wizardsFireBall.style.backgroundColor : '#ee4830',
-    index: ''
-  },
-};
-
-var getCurrentIndex = function (arr, item) {
-  var ind;
-  for (i = 0; i < arr.length; i++) {
-    if (arr[i] === item) {
-      ind = i;
-    }
-  }
-  if (ind === undefined) {
-    ind = arr.length;
-  }
-  return ind;
-};
-
-var getNextIndex = function (arr, item) {
-  var next;
-  if (item === arr.length - 1) {
-    next = 0;
-  } else {
-    next = item + 1;
-  }
-  return next;
-};
-
-var putColor = function (property, sourse, destination, type, field) {
-  var colorIndex;
-  if (property.index !== '') {
-    colorIndex = getNextIndex(sourse, property.index);
-  } else {
-    colorIndex = getNextIndex(sourse, getCurrentIndex(sourse, property.color));
-  }
-  destination.style[type] = sourse[colorIndex];
-  property.color = destination.style.type;
-  property.index = colorIndex;
-  field.value = sourse[colorIndex];
-};
 
 wizardsCoat.addEventListener('click', function () {
   putColor(currentWizardProperties.coatColor, COAT_COLORS, wizardsCoat, 'fill', wizardCoatColorFormField);
