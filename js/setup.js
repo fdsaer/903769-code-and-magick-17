@@ -23,19 +23,10 @@ var wizardCoatColorFormField = wizardForm.querySelector('input[name=coat-color]'
 var wizardEyesColorFormField = wizardForm.querySelector('input[name=eyes-color]');
 var wizardFireBallColorFormField = wizardForm.querySelector('input[name=fireball-color]');
 
-var currentWizardProperties = {
-  coatColor: {
-    color: wizardsCoat.style.fill,
-    index: ''
-  },
-  eyesColor: {
-    color: wizardsEyes.style.fill ? wizardsEyes.style.fill : 'black',
-    index: ''
-  },
-  fireballColor: {
-    color: wizardsFireBall.style.backgroundColor ? wizardsFireBall.style.backgroundColor : '#ee4830',
-    index: ''
-  },
+var currentWizardColorIndexes = {
+  coatColorIndex: 0,
+  eyesColorIndex: 0,
+  fireballColorIndex: 0
 };
 
 var getRandomItem = function (arr) {
@@ -79,19 +70,6 @@ var closePopup = function () {
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
-var getCurrentIndex = function (arr, item) {
-  var index;
-  for (i = 0; i < arr.length; i++) {
-    if (arr[i] === item) {
-      index = i;
-    }
-  }
-  if (index === undefined) {
-    index = arr.length;
-  }
-  return index;
-};
-
 var getNextIndex = function (arr, item) {
   var next;
   if (item === arr.length - 1) {
@@ -102,17 +80,12 @@ var getNextIndex = function (arr, item) {
   return next;
 };
 
-var putColor = function (property, sourse, destination, type, field) {
+var setElementColor = function (name, source, destination, type, field) {
   var colorIndex;
-  if (property.index !== '') {
-    colorIndex = getNextIndex(sourse, property.index);
-  } else {
-    colorIndex = getNextIndex(sourse, getCurrentIndex(sourse, property.color));
-  }
-  destination.style[type] = sourse[colorIndex];
-  property.color = destination.style.type;
-  property.index = colorIndex;
-  field.value = sourse[colorIndex];
+  colorIndex = getNextIndex(source, currentWizardColorIndexes[name]);
+  destination.style[type] = source[colorIndex];
+  currentWizardColorIndexes[name] = colorIndex;
+  field.value = source[colorIndex];
 };
 
 for (var i = 0; i < NUMBER_OF_SIMILAR_WIZARDS; i++) {
@@ -149,13 +122,13 @@ wizardNameInput.addEventListener('keydown', function (evt) {
 });
 
 wizardsCoat.addEventListener('click', function () {
-  putColor(currentWizardProperties.coatColor, COAT_COLORS, wizardsCoat, 'fill', wizardCoatColorFormField);
+  setElementColor('coatColorIndex', COAT_COLORS, wizardsCoat, 'fill', wizardCoatColorFormField);
 });
 
 wizardsEyes.addEventListener('click', function () {
-  putColor(currentWizardProperties.eyesColor, EYES_COLORS, wizardsEyes, 'fill', wizardEyesColorFormField);
+  setElementColor('eyesColorIndex', EYES_COLORS, wizardsEyes, 'fill', wizardEyesColorFormField);
 });
 
 wizardsFireBall.addEventListener('click', function () {
-  putColor(currentWizardProperties.fireballColor, FIREBALL_COLORS, wizardsFireBall, 'backgroundColor', wizardFireBallColorFormField);
+  setElementColor('fireballColorIndex', FIREBALL_COLORS, wizardsFireBall, 'backgroundColor', wizardFireBallColorFormField);
 });
