@@ -1,11 +1,11 @@
 'use strict';
 
 (function () {
-  var wizardForm = document.querySelector('.setup');
+  var wizardSetup = document.querySelector('.setup');
   var wizardFormOpener = document.querySelector('.setup-open');
-  var wizardFormShutter = wizardForm.querySelector('.setup-close');
-  var wizardNameInput = wizardForm.querySelector('.setup-user-name');
-  var dialogHandler = wizardForm.querySelector('.upload');
+  var wizardFormShutter = wizardSetup.querySelector('.setup-close');
+  var wizardNameInput = wizardSetup.querySelector('.setup-user-name');
+  var dialogHandler = wizardSetup.querySelector('.upload');
 
   var onPopupEscPress = function (evt) {
     if (document.activeElement !== wizardNameInput) {
@@ -14,15 +14,15 @@
   };
 
   var openPopup = function () {
-    wizardForm.classList.remove('hidden');
+    wizardSetup.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
   };
 
   var closePopup = function () {
-    wizardForm.classList.add('hidden');
+    wizardSetup.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
-    wizardForm.style.left = '';
-    wizardForm.style.top = '';
+    wizardSetup.style.left = '';
+    wizardSetup.style.top = '';
   };
 
   var preventEvent = function (evt) {
@@ -88,7 +88,7 @@
     window.util.isEnterEvent(evt, preventEvent);
   });
 
-  makeDraggable(wizardForm, dialogHandler);
+  makeDraggable(wizardSetup, dialogHandler);
 })();
 
 
