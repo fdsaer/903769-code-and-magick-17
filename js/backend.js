@@ -6,19 +6,19 @@
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
       xhr.addEventListener('load', function () {
-        xhr.timeout = 10;
         if (xhr.status === 200) {
           onLoad(xhr.response);
         } else {
           onError('Во время загрузки данных других игроков произошла ошибка. Статус ответа ' + xhr.status + ' ' + xhr.statusText);
         }
-        xhr.addEventListener('error', function () {
-          onError('Во время загрузки данных других игроков произошла ошибка соединения');
-        });
-        xhr.addEventListener('timeout', function () {
-          onError('Во время загрузки данных других игроков произошла ошибка запрос не успел выполниться за ' + xhr.timeout + ' мс');
-        });
       });
+      xhr.addEventListener('error', function () {
+        onError('Во время загрузки данных других игроков произошла ошибка соединения');
+      });
+      xhr.addEventListener('timeout', function () {
+        onError('Во время загрузки данных других игроков произошла ошибка запрос не успел выполниться за ' + xhr.timeout + ' мс');
+      });
+      xhr.timeout = 1000;
       xhr.open('GET', 'https://js.dump.academy/code-and-magick/data');
       xhr.send();
     },
